@@ -1,173 +1,71 @@
+<!-- @format -->
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Generator</title>
-    <!-- Font Awesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
-            text-align: center;
-            height: 80%; /* Fixed height */
-            overflow: visible; /* Allow overflow content */
-        }
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #333;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #555;
-            position: relative;
-        }
-        .info-icon {
-            margin-left: 5px;
-            cursor: pointer;
-            color: #007bff;
-        }
-        .tooltip {
-            display: none;
-            position: absolute;
-            background-color: #333;
-            color: #fff;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 12px;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            z-index: 1;
-        }
-        .info-icon:hover .tooltip {
-            display: block;
-        }
-        input[type="text"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-        button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #generatedPassword {
-            margin-top: 20px;
-            font-weight: bold;
-            word-break: break-all;
-            height: 60px; /* Fixed height for the password display */
-            overflow: auto; /* Allow scrolling if the password is too long */
-            background-color: #f9f9f9;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        } 
-        .copy-button {
-            margin-top: 10px;
-            background-color: #28a745;
-        }
-        .copy-button:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Password Generator</h1>
-        <form id="passwordForm">
-            <label for="salt">Salt:
-                <span class="info-icon"><i class="fas fa-info-circle"></i>
-                    <span class="tooltip">This salt is whatever you want to add to the beginning of your password (it can be left blank)</span>
-                </span>
-            </label>
-            <input type="text" id="salt" name="salt">
-            
-            <label for="length">Length:
-                <span class="info-icon"><i class="fas fa-info-circle"></i>
-                    <span class="tooltip">The length of the generated password. (Does not include salt and pepper
-                        . <b>Maxes at 10000.</b>)</span>
-                </span>
-            </label>
-            <input type="number" id="length" name="length" min="1" max="10000" value="10">
-            
-            <label for="pepper">Pepper:
-                <span class="info-icon"><i class="fas fa-info-circle"></i>
-                    <span class="tooltip">This pepper is whatever you want to add to the ending of your password (it can be left blank)</span>
-                </span>
-            </label>
-            <input type="text" id="pepper" name="pepper">
-            
-            <button type="submit">Generate Password</button>
-        </form>
-        
-        <h2>Generated Password:</h2>
-        <p id="generatedPassword"></p>
-        <button id="copyPassword" class="copy-button">Copy to Clipboard</button>
-    </div>
-    
-    <script>
-        const passwordForm = document.getElementById("passwordForm");
-        passwordForm.addEventListener("submit", function (event) {
-            event.preventDefault();
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Password Generator</title>
+		<!-- Font Awesome CDN -->
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
-            const salt = document.getElementById("salt").value;
-            const length = document.getElementById("length").value;
-            const pepper = document.getElementById("pepper").value;
+		<link rel="stylesheet" href="./index.css" />
+	</head>
+	<body>
+		<div class="container">
+			<h1>Password Generator</h1>
+			<form id="passwordForm">
+				<label for="salt"
+					>Salt:
+					<span class="info-icon"
+						><i class="fas fa-info-circle"></i>
+						<span class="tooltip"
+							>This salt is whatever you want to add to the beginning of your
+							password (it can be left blank)</span
+						>
+					</span>
+				</label>
+				<input type="text" id="salt" name="salt" />
 
-            const url = `/generate?salt=${encodeURIComponent(salt)}&length=${encodeURIComponent(length)}&pepper=${encodeURIComponent(pepper)}`;
+				<label for="length"
+					>Length:
+					<span class="info-icon"
+						><i class="fas fa-info-circle"></i>
+						<span class="tooltip"
+							>The length of the generated password. (Does not include salt and
+							pepper . <b>Maxes at 10000.</b>)</span
+						>
+					</span>
+				</label>
+				<input
+					type="number"
+					id="length"
+					name="length"
+					min="1"
+					max="10000"
+					value="10" />
 
-            fetch(url)
-                .then((response) => response.json())
-                .then((data) => {
-                    const password = data.password;
-                    document.getElementById("generatedPassword").textContent = password;
-                    console.log(password);
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        });
+				<label for="pepper"
+					>Pepper:
+					<span class="info-icon"
+						><i class="fas fa-info-circle"></i>
+						<span class="tooltip"
+							>This pepper is whatever you want to add to the ending of your
+							password (it can be left blank)</span
+						>
+					</span>
+				</label>
+				<input type="text" id="pepper" name="pepper" />
 
-        const copyPasswordButton = document.getElementById("copyPassword");
-        copyPasswordButton.addEventListener("click", function () {
-            const generatedPassword = document.getElementById("generatedPassword").textContent;
-            navigator.clipboard.writeText(generatedPassword).then(() => {
-                alert("Password copied to clipboard!");
-            }).catch((err) => {
-                console.error("Failed to copy password: ", err);
-            });
-        });
-    </script>
-</body>
+				<button type="submit">Generate Password</button>
+			</form>
+
+			<h2>Generated Password:</h2>
+			<p id="generatedPassword"></p>
+			<button id="copyPassword" class="copy-button">Copy to Clipboard</button>
+            <script type="text/javascript" src="./index.js"></script>
+		</div>
+	</body>
 </html>
