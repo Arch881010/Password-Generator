@@ -7,13 +7,9 @@ app = Flask(__name__)
 def index():
     return send_from_directory('files', 'index.html')
 
-@app.route("/index.js", methods=["GET"])
-def serve_js():
-    return send_from_directory('files', 'index.js')
-
-@app.route("/index.css", methods=["GET"])
-def serve_css():
-    return send_from_directory('files', 'index.css')
+@app.route("/public/<path:path>", methods=["GET"])
+def public(path):
+    return send_from_directory('public', path)
 
 @app.route("/length/", methods=["GET"])
 def length():
