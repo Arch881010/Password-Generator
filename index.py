@@ -28,4 +28,4 @@ def generate():
     return jsonify(password=password, length=len(password), success=True, error="None")
 
 if __name__ == "__main__":
-    app.run(port=3000)
+    app.run(port=3001)
