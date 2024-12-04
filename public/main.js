@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		const length = document.getElementById("length").value;
 		const pepper = document.getElementById("pepper").value;
 
-		const data_url = `https://password.arch1010.dev/generate?salt=${salt}&length=${length}&pepper=${pepper}`;
+		const data_url = `${window.location.origin}/generate?salt=${salt}&length=${length}&pepper=${pepper}`;
 
 		fetch(data_url)
 			.then((response) => response.json())
